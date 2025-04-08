@@ -19,8 +19,8 @@ class ConnectedComponents {
     constructor(n) {
         this.numberOfNodes = n;
         this.numberOfConnectedComponents = n;
-        this.rank = new Array(n).fill(0);
-        this.initialize_arrayParent();
+        this.rank = new Array(n).fill(1);
+        this.parent = Array.from(Array(this.numberOfNodes).keys());
     }
 
     /**
@@ -30,13 +30,6 @@ class ConnectedComponents {
         let size = edges.length;
         for (let i = 0; i < size; i++) {
             this.unionFind(edges[i][0], edges[i][1]);
-        }
-    }
-
-    initialize_arrayParent() {
-        this.parent = [];
-        for (let i = 0; i < this.numberOfNodes; i++) {
-            this.parent[i] = i;
         }
     }
 
@@ -70,13 +63,12 @@ class ConnectedComponents {
      * @param {number} indexTwo
      */
     joinByRank(indexOne, indexTwo) {
-        if (this.rank[indexOne] > this.rank[indexTwo]) {
-            this.parent[indexOne] = indexTwo;
-        } else if (this.rank[indexOne] > this.rank[indexTwo]) {
+        if (this.rank[indexOne] >= this.rank[indexTwo]) {
             this.parent[indexTwo] = indexOne;
-        } else {
+            this.rank[indexOne] += this.rank[indexTwo];
+        } else if (this.rank[indexOne] < this.rank[indexTwo]) {
             this.parent[indexOne] = indexTwo;
-            this.rank[indexTwo]++;
+            this.rank[indexTwo] += this.rank[indexOne];
         }
     }
 }
