@@ -9,8 +9,9 @@ public class Solution {
     public int countComponents(int n, int[][] edges) {
         numberOfNodes = n;
         numberOfConnectedComponents = n;
+        
         rank = new int[numberOfNodes];
-        Array.fill(rank, 1);
+        Arrays.fill(rank, 1);
         initialize_arrayParent();
 
         int size = edges.length;
@@ -49,7 +50,7 @@ public class Solution {
         if (rank[indexOne] >= rank[indexTwo]) {
             parent[indexTwo] = indexOne;
             rank[indexOne] +=rank[indexTwo];
-        } else if (rank[indexOne] > rank[indexTwo]) {
+        } else if (rank[indexOne] < rank[indexTwo]) {
             parent[indexOne] = indexTwo;
             rank[indexTwo] +=rank[indexOne];
         }
