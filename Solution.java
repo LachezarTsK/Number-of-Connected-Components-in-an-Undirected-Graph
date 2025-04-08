@@ -1,5 +1,5 @@
 
-public class Solution {
+class Solution {
 
     int[] parent;
     int[] rank;
@@ -9,10 +9,10 @@ public class Solution {
     public int countComponents(int n, int[][] edges) {
         numberOfNodes = n;
         numberOfConnectedComponents = n;
-        
+
+        parent = IntStream.range(0, numberOfNodes).toArray();
         rank = new int[numberOfNodes];
         Arrays.fill(rank, 1);
-        initialize_arrayParent();
 
         int size = edges.length;
         for (int i = 0; i < size; i++) {
@@ -20,13 +20,6 @@ public class Solution {
         }
 
         return numberOfConnectedComponents;
-    }
-
-    public void initialize_arrayParent() {
-        parent = new int[numberOfNodes];
-        for (int i = 0; i < numberOfNodes; i++) {
-            parent[i] = i;
-        }
     }
 
     public int findParent(int index) {
@@ -49,10 +42,10 @@ public class Solution {
     public void joinByRank(int indexOne, int indexTwo) {
         if (rank[indexOne] >= rank[indexTwo]) {
             parent[indexTwo] = indexOne;
-            rank[indexOne] +=rank[indexTwo];
+            rank[indexOne] += rank[indexTwo];
         } else if (rank[indexOne] < rank[indexTwo]) {
             parent[indexOne] = indexTwo;
-            rank[indexTwo] +=rank[indexOne];
+            rank[indexTwo] += rank[indexOne];
         }
     }
 }
