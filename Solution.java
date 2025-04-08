@@ -10,6 +10,7 @@ public class Solution {
         numberOfNodes = n;
         numberOfConnectedComponents = n;
         rank = new int[numberOfNodes];
+        Array.fill(rank, 1);
         initialize_arrayParent();
 
         int size = edges.length;
@@ -45,13 +46,12 @@ public class Solution {
     }
 
     public void joinByRank(int indexOne, int indexTwo) {
-        if (rank[indexOne] > rank[indexTwo]) {
-            parent[indexOne] = indexTwo;
-        } else if (rank[indexOne] > rank[indexTwo]) {
+        if (rank[indexOne] >= rank[indexTwo]) {
             parent[indexTwo] = indexOne;
-        } else {
+            rank[indexOne] +=rank[indexTwo];
+        } else if (rank[indexOne] > rank[indexTwo]) {
             parent[indexOne] = indexTwo;
-            rank[indexTwo]++;
+            rank[indexTwo] +=rank[indexOne];
         }
     }
 }
